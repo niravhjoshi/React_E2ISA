@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 //This way to create function do login inside function and return it values.
 /*const userService = {
@@ -62,19 +64,37 @@ class App extends Component
     //This is where we will create method for detroying item from list upon click event on dismiss.
 
     return (
-          <div className="App">
+          <div className="jumbotron">
           <h2> Welcome to E2ISA App</h2>
           <header className="App-header">
           {this.state.listvar.map(item => 
-          
-          <code key={item.objectID}>
+          <div className="container" key={item.objectID}>
+             <form>
+          <input
+            type="text"
+            name="FirstName"
+            placeholder="First name"
+          />
+          <input
+            type="text"
+            name="LastName"
+            placeholder="Last name"
+          />
+          <input
+            type="date"
+            name="BDate"
+            placeholder="BirthDate"
+          />
+          <button type="submit">Submit</button>
+        </form>
+          <code>
            <p>{item.title}</p>
            <p>{item.author}</p>
-           <button onClick={() => this.onDismiss(item.objectID)} type="button">
+           <button className="btn btn-success" onClick={() => this.onDismiss(item.objectID)} type="button">
             Dismiss
           </button>
           </code>  
-          
+          </div>
           )}
           </header>
           </div>
