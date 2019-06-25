@@ -22,6 +22,9 @@ const Navigation = () => (
         <li>
         <Link to={ROUTES.ADMIN} className="nav-link active">Admin</Link>
         </li>
+        <li>
+        <Link to={ROUTES.SOME_COMP} className="nav-link active">Some</Link>
+        </li>
         </nav>
     </div>
 );

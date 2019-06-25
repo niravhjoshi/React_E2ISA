@@ -12,6 +12,7 @@ import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 //import SignOut from '../SignOut';
 import Account from '../Account';
+import SomeComp from '../SomeComp';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -28,7 +29,7 @@ const App = () => (
         <Route path={ROUTES.HOME} render={props => <Home {...props} />} />
         <Route path={ROUTES.ACCOUNT} render={props => <Account {...props} />} />
         <Route path={ROUTES.ADMIN} render={props => <Admin {...props} />} />
-        
+        <Route path={ROUTES.SOME_COMP} render={props => <SomeComp {...props} />} />
         
     </div>
     </Router>
