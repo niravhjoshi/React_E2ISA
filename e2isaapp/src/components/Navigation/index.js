@@ -11,6 +11,9 @@ const Navigation = () => (
         <Link to={ROUTES.SIGN_IN} className="nav-link active">Sign In</Link>
         </li>
         <li>
+        <Link to={ROUTES.SIGN_UP} className="nav-link active">Sign Up</Link>
+        </li>
+        <li>
         <Link to={ROUTES.LANDING} className="nav-link active">Landing</Link>
         </li>
         <li>
