@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import SignOutButton from '../SignOut';
 
 import * as ROUTES from '../../constants/routes';
 
@@ -27,6 +28,9 @@ const Navigation = () => (
         </li>
         <li>
         <Link to={ROUTES.SOME_COMP} className="nav-link active">Some</Link>
+        </li>
+        <li>
+        <SignOutButton />
         </li>
         </nav>
     </div>

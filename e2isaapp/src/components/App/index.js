@@ -22,14 +22,14 @@ const App = () => (
         <Navigation/>
         <hr/>
         
-        <Route path={ROUTES.LANDING} render={props => <Landing {...props} />} />
-        <Route path={ROUTES.SIGN_UP} render={props => <SignUp {...props} />} />
-        <Route path={ROUTES.SIGN_IN} render={props => <SignIn {...props} />} />
-        <Route path={ROUTES.PASSWORD_FORGET} render={props => <PasswordForget {...props} />} />
-        <Route path={ROUTES.HOME} render={props => <Home {...props} />} />
-        <Route path={ROUTES.ACCOUNT} render={props => <Account {...props} />} />
-        <Route path={ROUTES.ADMIN} render={props => <Admin {...props} />} />
-        <Route path={ROUTES.SOME_COMP} render={props => <SomeComp {...props} />} />
+        <Route path={ROUTES.LANDING} component={Landing} />
+        <Route path={ROUTES.SIGN_UP} component={SignUp} />
+        <Route path={ROUTES.SIGN_IN} component={SignIn} />
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+        <Route path={ROUTES.HOME} component={Home} />
+        <Route path={ROUTES.ACCOUNT} component={Account} />
+        <Route path={ROUTES.ADMIN} component={Admin} />
+        <Route path={ROUTES.SOME_COMP} component={SomeComp} />
         
     </div>
     </Router>
