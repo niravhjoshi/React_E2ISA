@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 
@@ -15,13 +15,38 @@ import Account from '../Account';
 import SomeComp from '../SomeComp';
 
 import * as ROUTES from '../../constants/routes';
+import {withFirebase} from '../Firebase'
 
-const App = () => (
+class App extends Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        authUser: null,
+      };
+
+    }
+    
+    componentDidMount() {
+      this.listener = this.props.firebase.auth.onAuthStateChanged(
+        authUser => {
+          authUser
+            ? this.setState({ authUser })
+            : this.setState({ authUser: null });
+        },
+      );
+    }
+  
+    componentWillUnmount() {
+      this.listener();
+  }
+
+    render() {
+        return (
+
     <Router>
     <div>
-        <Navigation/>
-        <hr/>
-        
+        <Navigation authUser={this.state.authUser} />
         <Route path={ROUTES.LANDING} component={Landing} />
         <Route path={ROUTES.SIGN_UP} component={SignUp} />
         <Route path={ROUTES.SIGN_IN} component={SignIn} />
@@ -33,6 +58,6 @@ const App = () => (
         
     </div>
     </Router>
-);
-
-export default App;
+)};
+        }
+export default withFirebase(App);

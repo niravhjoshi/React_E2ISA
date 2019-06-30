@@ -8,6 +8,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignIn = () => (
     <div className="jumbotron">
+        <h1>SignIn</h1>
     <SignInForm />
     <SignUpLink />
     </div>
@@ -30,7 +31,7 @@ onSubmit = event =>{
     const{email,password} = this.state;
     
     this.props.firebase
-    .doSignInWithEmailandPassword(email,password)
+    .doSignInWithEmailAndPassword(email,password)
     .then(() => {
         this.setState({ ...INITIAL_STATE});
         this.props.history.push(ROUTES.HOME);
