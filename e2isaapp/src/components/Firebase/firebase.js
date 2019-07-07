@@ -1,6 +1,9 @@
 import  app from 'firebase/app';
 import 'firebase/auth';
 
+import 'firebase/database';
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyBFUTrGj8TtqqAjOsQlPcl82R7m1DEezEs",
     authDomain: "myfiree2isa.firebaseapp.com",
@@ -16,6 +19,7 @@ const firebaseConfig = {
       app.initializeApp(firebaseConfig);
       this.auth = app.auth();
       this.googleProvider = new app.auth.GoogleAuthProvider();
+      this.db = app.database();
     }
 
     //Authentication API to firebase using the following three SignUp Mechanism Email/Password / Google OAuth / Phone based pin Auth
@@ -25,6 +29,11 @@ const firebaseConfig = {
     doSignOut = () => this.auth.signOut();
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
     doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+    //User API to assign user ID GUid to vars and add this user to firebase realtime database after sign up
+    user = uid => this.db.ref(`users/${uid}`);
+
+    users = () => this.db.ref('users');
   }
   
   //firebase.initializeApp(firebaseConfig);

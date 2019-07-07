@@ -31,6 +31,9 @@ const Navigation = ({ authUser }) => (
         <Link to={ROUTES.HOME} className="nav-link active">Home</Link>
         </li>
         <li>
+      <Link to={ROUTES.ADMIN} className="nav-link active">Admin</Link>
+        </li>
+        <li>
         <SignOutButton />
         </li>
         </nav>
