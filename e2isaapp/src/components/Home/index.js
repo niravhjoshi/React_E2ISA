@@ -12,5 +12,6 @@ const Home = () => (
 );
 
 const condition = authUser =>  !!authUser;
+//authUser && !!authUser.roles[ROLES.ADMIN];
 
 export default withAuthorization(condition)(Home);

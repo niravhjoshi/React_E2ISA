@@ -6,21 +6,22 @@ import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 
 import { AuthUserContext } from '../Session';
+import * as ROLES from '../../constants/roles';
 
 
 const Navigation = ({ authUser }) => (
     <div>
     <AuthUserContext.Consumer>
     {authUser =>
-        authUser ? <NavigationAuth /> : <NavigationNonAuth />
+        authUser ? <NavigationAuth authUser={authUser} /> : <NavigationNonAuth />
       }
     </AuthUserContext.Consumer>
     </div>
   );
 
-    const NavigationAuth = () => (
+    const NavigationAuth = ({ authUser }) =>  (
     <div>
-        <nav className="nav nav-pills nav-justified">>
+        <nav className="nav nav-pills nav-justified">
         <li>
         <Link to={ROUTES.ACCOUNT} className="nav-link active">Account</Link>
         </li>
@@ -30,9 +31,11 @@ const Navigation = ({ authUser }) => (
         <li>
         <Link to={ROUTES.HOME} className="nav-link active">Home</Link>
         </li>
-        <li>
-      <Link to={ROUTES.ADMIN} className="nav-link active">Admin</Link>
-        </li>
+        {!!authUser.roles[ROLES.ADMIN] && (
+      <li>
+        <Link to={ROUTES.ADMIN} className="nav-link active">Admin</Link>
+      </li>
+    )}
         <li>
         <SignOutButton />
         </li>
@@ -42,7 +45,7 @@ const Navigation = ({ authUser }) => (
 
 const NavigationNonAuth = () => (
     <div>
-        <nav className="nav nav-pills nav-justified">>
+        <nav className="nav nav-pills nav-justified">
         <li>
         <Link to={ROUTES.SIGN_IN} className="nav-link active">Sign In</Link>
         </li>

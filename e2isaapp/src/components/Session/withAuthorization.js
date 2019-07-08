@@ -9,39 +9,58 @@ import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+const withAuthorization = condition => Component => {
+  
+  class WithAuthorization extends React.Component {
+    componentDidMount() {
+      this.listener = this.props.firebase.onAuthUserListener(
 
-const withAuthorization = condition  => Component => {
+        authUser => {
 
-    class WithAuthorization extends React.Component{
+          if (authUser) {
+            this.props.firebase
+              .user(authUser.uid)
+              .once('value')
+              .then(snapshot => {
+                const dbUser = snapshot.val();
 
-
-        componentDidMount() {
-            this.listener = this.props.firebase.auth.onAuthStateChanged(
-              authUser => {
-                if (!condition(authUser)) {
-                  this.props.history.push(ROUTES.SIGN_IN);
+                // default empty roles
+                if (!dbUser.roles) {
+                  dbUser.roles = {};
                 }
-            });
-        }
 
-        componentWillUnmount() {
-            this.listener();
+                // merge auth and db user
+                authUser = {
+                  uid: authUser.uid,
+                  email: authUser.email,
+                  ...dbUser,
+                };
+
+                this.setState({ authUser });
+                
+              });
+          } else {
+            this.props.history.push(ROUTES.SIGN_IN);
           }
+    });
+  }
+
+    componentWillUnmount() {
+      this.listener();
+}
           
         render(){
 
             return (
                 <AuthUserContext.Consumer>
-                        {authUser =>
-                        condition(authUser) ? <Component {...this.props} /> : null
-                        }
+                      {authUser =>   condition(authUser) ? <Component {...this.props} /> : null
+                      }
                 </AuthUserContext.Consumer>
-                
                 );
         }
     }
 
-    //return withAuthorization;
+    
     return compose(withRouter,withFirebase,)(WithAuthorization);
 }
 

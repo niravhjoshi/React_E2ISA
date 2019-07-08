@@ -1,8 +1,9 @@
 
 import React, { Component } from 'react';
-//import {withAuthorization} from '../Session'
-//import * as ROLES from '../../constants/roles';
+import {withAuthorization} from '../Session'
+import * as ROLES from '../../constants/roles';
 import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 
 class Admin extends Component {
   constructor(props){
@@ -38,7 +39,9 @@ class Admin extends Component {
 
       return (
         <div>
-          <h1>Admin for User Managegment</h1>
+          <p>
+          The Admin Page is accessible by every signed in admin user.
+        </p>
   
           {loading && <div>Loading ...</div>}
   
@@ -65,4 +68,7 @@ class Admin extends Component {
       ))}
     </ul>
   );
-  export default withFirebase(Admin);
+  const condition = authUser =>
+  authUser && !!authUser.roles[ROLES.ADMIN]
+
+  export default compose(withAuthorization(condition),withFirebase,)(Admin);
