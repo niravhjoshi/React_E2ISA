@@ -18,6 +18,11 @@ const firebaseConfig = {
       constructor(){
       app.initializeApp(firebaseConfig);
       
+      //Helper API
+      this.serverValue = app.database.ServerValue;
+      this.emailAuthProvider = app.auth.EmailAuthProvider;
+
+      //Firebase API 
       this.auth = app.auth();
       this.db = app.database();
 
@@ -38,6 +43,8 @@ const firebaseConfig = {
     doSignOut = () => this.auth.signOut();
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
     doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+    doSendEmailVerification = () => this.auth.currentUser.sendEmailVerification(
+      { url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,});
 
 
     onAuthUserListener = (next, fallback) =>
@@ -57,6 +64,8 @@ const firebaseConfig = {
             authUser = {
               uid: authUser.uid,
               email: authUser.email,
+              emailVerified: authUser.emailVerified,
+              providerData: authUser.providerData,
               ...dbUser,
             };
 
