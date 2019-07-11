@@ -8,7 +8,7 @@ import { withAuthorization, withEmailVerification } from '../Session';
 
 const PersonPage = () => (
     <div>
-        <h1>WElcome to Person Page </h1>
+        <h1>Welcome to Person Page </h1>
         <Persons />        
    </div>
 );

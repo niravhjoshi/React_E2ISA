@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import FileUploader from "react-firebase-file-uploader";
 
+import firebase from "firebase";
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 
@@ -14,6 +16,9 @@ class Persons extends Component{
             Person_Sex: '',
             Person_BDate:'',
             Person_Img:'',
+            isUploading: false,
+            progress: 0,
+            PersonURL:'',
         };
 
     }
@@ -31,10 +36,10 @@ class Persons extends Component{
               });    
     };
 
-    onChangePerson_Img = event =>{
-        this.setState({Person_Img:event.target.value,
-              });    
-    };
+    // onChangePerson_Img = event =>{
+    //     this.setState({Person_Img:event.target.value,
+    //           });    
+    // };
     
     
     // componentWillUnmount() {
@@ -46,7 +51,8 @@ class Persons extends Component{
             Person_Name: this.state.Person_Name,
              Person_Sex: this.state.Person_Sex,
              Person_BDate: this.state.Person_BDate,
-            Person_Img: this.state.Person_Img,
+             Person_Img: this.state.Person_Img,
+             PersonURL: this.state.PersonURL,
             userId: authUser.uid,
           createdAt: this.props.firebase.serverValue.TIMESTAMP,
         });
@@ -59,12 +65,32 @@ class Persons extends Component{
     
         event.preventDefault();
       };
+
+      handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+      handleProgress = progress => this.setState({ progress });
+      handleUploadError = error => {
+                                    this.setState({ isUploading: false });
+                                    console.error(error);
+                                    };
+
+      handleUploadSuccess = (filename,authUser) => {
+        this.setState({ Person_Img: filename, progress: 100, isUploading: false });
+        firebase
+          .storage()
+          .ref(`Images`)
+          .child(filename)
+          .getDownloadURL()
+          .then(url => this.setState({ PersonURL: url }));
+      };
+
+
+
       render() {
-        const { Person_Name,Person_BDate,Person_Img,Person_Sex} = this.state;
+        const { Person_Name,Person_BDate,Person_Sex} = this.state;
         return(
             <AuthUserContext.Consumer>
         {authUser => (
-                    <form onSubmit={event => this.onCreatePersons(event, authUser)} >
+                    <form className="text-center"  onSubmit={event => this.onCreatePersons(event, authUser)} >
                     <p>Person Name</p>
                     <input   type="text"   value={Person_Name}   onChange={this.onChangePerson_NameText}  /><br></br>
                     <p>Person BirthDate</p>
@@ -72,7 +98,20 @@ class Persons extends Component{
                     <p>Person Sex</p>
                     <input   type="text"   value={Person_Sex}   onChange={this.onChangePerson_Sex}  /><br></br>
                     <p>Person Image</p>
-                    <input   type="text"   value={Person_Img}   onChange={this.onChangePerson_Img}  /><br></br>
+                    <label>Person Image:</label>
+                        
+                        {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+                        {this.state.PersonURL && <img alt={this.state.Person_Name} src={this.state.PersonURL} />}
+                         <FileUploader
+                        accept="image/*.pdf,.csv"
+                        name="Person_Img"
+                        randomizeFilename
+                        storageRef={firebase.storage().ref(`Images`)}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadError={this.handleUploadError}
+                        onUploadSuccess={this.handleUploadSuccess}
+                        onProgress={this.handleProgress}
+                    />
 
                     <button type="submit">Send</button>
                     </form>
