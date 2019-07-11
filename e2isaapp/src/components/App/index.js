@@ -13,7 +13,7 @@ import SignUp from '../SignUp';
 //import SignOut from '../SignOut';
 import Account from '../Account';
 import SomeComp from '../SomeComp';
-
+import PersonPage from '../Persons';
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
@@ -29,6 +29,7 @@ const App = () =>(
         <Route path={ROUTES.ACCOUNT} component={Account} />
         <Route path={ROUTES.ADMIN} component={Admin} />
         <Route path={ROUTES.SOME_COMP} component={SomeComp} />
+        <Route path={ROUTES.PERSONS} component={PersonPage} />
         
     </div>
     </Router>

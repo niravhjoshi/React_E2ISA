@@ -80,8 +80,14 @@ const firebaseConfig = {
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
+    //Person API to assign user log in GUID to person name to firebase realtime database.
+    person = uid => this.db.ref(`persons/${uid}`);
+
+    persons = () => this.db.ref('persons')
+
   }
   
+
   //firebase.initializeApp(firebaseConfig);
   export default Firebase;
   

@@ -31,6 +31,9 @@ const Navigation = ({ authUser }) => (
         <li>
         <Link to={ROUTES.HOME} className="nav-link active">Home</Link>
         </li>
+        <li>
+        <Link to={ROUTES.PERSONS} className="nav-link active">Persons</Link>
+        </li>
         {!!authUser.roles[ROLES.ADMIN] && (
       <li>
         <Link to={ROUTES.ADMIN} className="nav-link active">Admin</Link>

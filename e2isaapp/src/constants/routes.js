@@ -7,3 +7,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const SOME_COMP='/some';
 export const ADMIN = '/admin';
 export const ADMIN_DETAILS = '/admin/:id';
+export const PERSONS = '/persons';
+export const PERSONS_DET = '/persons/:id';
