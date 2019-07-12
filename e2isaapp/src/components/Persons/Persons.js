@@ -96,12 +96,24 @@ class Persons extends Component{
                     <p>Person BirthDate</p>
                     <input   type="date"   value={Person_BDate}   onChange={this.onChangePerson_BDate}  /><br></br>
                     <p>Person Sex</p>
-                    <input   type="text"   value={Person_Sex}   onChange={this.onChangePerson_Sex}  /><br></br>
-                    <p>Person Image</p>
-                    <label>Person Image:</label>
-                        
+                    <label className="radio-inline">
+                        <input type="radio" value="Male"
+                        checked={this.state.Person_Sex === 'Male'}  
+                        onChange={this.onChangePerson_Sex}/>Male
+                    </label><br></br>
+                    <label className="radio-inline">
+                        <input type="radio" value="Female" 
+                        checked = {this.state.Person_Sex ==='Female'}
+                        onChange={this.onChangePerson_Sex}/>Female
+                    </label><br></br>
+                    <label className="radio-inline">
+                        <input type="radio" value="None" 
+                        checked = {this.state.Person_Sex ==='None'}
+                        onChange={this.onChangePerson_Sex}/>None
+                    </label><br></br>
+                    <label>Person Image Upload:</label>
                         {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                        {this.state.PersonURL && <img alt={this.state.Person_Name} src={this.state.PersonURL} />}
+                        {this.state.PersonURL && <img className="img-rounded" alt={this.state.Person_Name} src={this.state.PersonURL} />}<br></br>
                          <FileUploader
                         accept="image/*.pdf,.csv"
                         name="Person_Img"
@@ -111,7 +123,7 @@ class Persons extends Component{
                         onUploadError={this.handleUploadError}
                         onUploadSuccess={this.handleUploadSuccess}
                         onProgress={this.handleProgress}
-                    />
+                    /><br></br>
 
                     <button type="submit">Send</button>
                     </form>
